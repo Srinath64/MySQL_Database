@@ -244,6 +244,66 @@ mysql> select * from employee_payroll;
 +----+---------+-----------+------------+--------+-----------+-------------+------------+------------+-------------+------------+---------+
 4 rows in set (0.00 sec)
 
+mysql> alter table employee_payroll drop column department;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------+-----------+------------+--------+-----------+-------------+------------+-------------+------------+---------+
+| ID | name    | basic_pay | start_date | Gender | address   | phoneNumber | deductions | Taxable_Pay | Income_Tax | Net_Pay |
++----+---------+-----------+------------+--------+-----------+-------------+------------+-------------+------------+---------+
+|  1 | Srinath |    100000 | 2021-11-24 | M      | Tamilnadu |        NULL |       NULL |        NULL |       NULL |    NULL |
+|  2 | Richard |     50000 | 2021-11-25 | M      | Tamilnadu |        NULL |       NULL |        NULL |       NULL |    NULL |
+|  3 | Arun    |     75000 | 2021-12-25 | M      | Tamilnadu |        NULL |       NULL |        NULL |       NULL |    NULL |
+|  4 | Terissa |     20000 | 2021-10-22 | F      | Chennai   |           9 |       2000 |        1000 |        200 |   18000 |
++----+---------+-----------+------------+--------+-----------+-------------+------------+-------------+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> create table Department(dID int Primary Key , departmentName varchar(30));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into department values(1 , "Marketing");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(2 , "Sales");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department;
++-----+----------------+
+| dID | departmentName |
++-----+----------------+
+|   1 | Marketing      |
+|   2 | Sales          |
++-----+----------------+
+2 rows in set (0.00 sec)
+
+mysql> create table emp_Dept (eID int Not Null , dID int Not Null);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into emp_dept values(3,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_dept values(3,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from emp_dept;
++-----+-----+
+| eID | dID |
++-----+-----+
+|   3 |   1 |
+|   3 |   2 |
++-----+-----+
+2 rows in set (0.00 sec)
+
+mysql> select employee_payroll.name, emp_dept.dID from employee_payroll inner Join emp_dept ON employee_payroll.ID = emp_dept.eID;
++------+-----+
+| name | dID |
++------+-----+
+| Arun |   1 |
+| Arun |   2 |
++------+-----+
+2 rows in set (0.00 sec)
+
 
 
 
